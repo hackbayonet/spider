@@ -1,0 +1,12 @@
+# eclipse
+.project
+.pydevproject
+.settings/
+
+# python virtualenv
+spiderEnv/
+
+# python
+qiushibaike/__pycache__/
+*.pyc
+
