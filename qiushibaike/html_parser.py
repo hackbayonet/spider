@@ -3,9 +3,11 @@
 Created on 2016年11月1日
 '''
 from lxml import etree  # @UnresolvedImport
-from urllib.parse import urljoin
+try:
+    from urlparse import urljoin
+except ImportError:
+    from urllib.parser import urljoin
 import re
-
 
 
 class htmlParser(object):
@@ -28,7 +30,7 @@ class htmlParser(object):
         new_urls = set()
         links = html.xpath('//a/@href')
         for link in links:
-            if re.search('^/users/\d+/$', link) or re.search('^/article/\d+$', link):
+            if re.search('^/users/\d+/', link) or re.search('^/article/\d+', link):
                 url = urljoin(page_url, link)
                 new_urls.add(url)
                 

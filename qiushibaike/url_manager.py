@@ -15,7 +15,12 @@ class urlManager(object):
         
         if  url not in self.old_urls and url not in self.new_urls: 
             self.new_urls.add(url)
-
+    
+    def already_crawling_count(self):
+        return len(self.old_urls)
+    
+    def wait_crawling_count(self):
+        return len(self.new_urls)
     
     def get_new_url(self):
         new_url = self.new_urls.pop()
