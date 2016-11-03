@@ -2,6 +2,7 @@
 '''
 Created on 2016年11月1日
 '''
+import time
 try:
     import urllib.request as urllib2
     from urllib.error import HTTPError as  URLError
@@ -22,6 +23,10 @@ class htmlDownload(object):
             response = urllib2.urlopen(request, timeout=10)
         except URLError as e:
             if hasattr(e, 'code'):
+                if e.code == 503:
+                    time.sleep(0.3)
+                    raise
+                    
                 logger.error('spider download error status code is (%d)', e.code)
         else:
             return response.read()

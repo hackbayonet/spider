@@ -13,24 +13,33 @@ import re
 class htmlParser(object):
     
     def _get_data(self, html):
-        content = set()
+        content = {}
         datas = html.xpath('//*[@id="single-next-link"]//*/text()|\
         //*[@id="single-next-link"]//*/@src')
         if len(datas) == 0:
             return 
-        for data in datas: 
+        
+        content['text'] = set()
+        # <div class="author clearfix">
+        try:
+            content['name'] = html.xpath('//div[@class="author clearfix"]/a/h2/text()')[0]
+            content['title'] = html.xpath('//title/text()')[0]
+        except IndexError:
+            return
+        for data in datas:
             if re.search('^http', data):
-                content.add(data)
+                content['text'].add('<file type="jpg">%s</file>' % data)
             else:
                 data = data.replace('\n','')
-                content.add(data)
+                content['text'].add(data)
+                
         return content
     
     def _get_all_urls(self, page_url, html):
         new_urls = set()
         links = html.xpath('//a/@href')
         for link in links:
-            if re.search('^/users/\d+/', link) or re.search('^/article/\d+', link):
+            if re.search('/users/', link) or re.search('/article/', link):
                 url = urljoin(page_url, link)
                 new_urls.add(url)
                 

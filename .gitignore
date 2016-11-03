@@ -10,3 +10,10 @@ spiderEnv/
 qiushibaike/__pycache__/
 *.pyc
 
+# log
+*.log
+
+
+# temp
+*.txt
+数据/
